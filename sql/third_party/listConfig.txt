@@ -1,0 +1,33 @@
+$hidden = array(
+				"base_url","index_page","uri_protocol","url_suffix","language","enable_hooks","subclass_prefix","composer_autoload","permitted_uri_chars","allow_get_array","enable_query_strings","controller_trigger","function_trigger","directory_trigger","log_threshold","log_path","log_file_extension","log_file_permissions","error_views_path","cache_path","cache_query_string","sess_driver","sess_cookie_name","sess_expiration","sess_save_path","sess_match_ip","sess_time_to_update","sess_regenerate_destroy","cookie_prefix","cookie_domain","cookie_path","cookie_secure","cookie_httponly","standardize_newlines","csrf_cookie_name","csrf_expire","csrf_regenerate","csrf_exclude_uris","time_reference","rewrite_short_tags","menu_admin"
+				);
+
+
+	
+	 //Config API Helper -------------------------------------------------->>>
+
+    private function _set_config($pathFile,$data,$priority=false){
+
+  	 if (!file_exists($pathFile) AND !is_array($data))
+  	 {
+     fatal_error("Not Exist File Config Required");
+     return 0;
+   	}
+
+  	if($data === false or !is_array($data))
+  	{
+  		return parse_ini_file($pathFile);
+  	}
+
+  $d1 = parse_ini_file($pathFile);
+  $d_ = array_merge($data,$d1);
+ 
+ 		//Execute write ini file   ----+++|
+  ob_start();
+  for ($i=0; $i < count($d_); $i++) { 
+    echo key($d_)." = ".current($d_)."\r
+"; next($d_);
+  }
+  $write = ob_get_clean();
+  file_put_contents($pathFile."a", $write); return true;
+		}  //end function sey config
